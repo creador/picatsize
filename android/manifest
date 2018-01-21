@@ -2,17 +2,17 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.2.1
-apiversion: 3
-architectures: armeabi-v7a x86 x86_64
-description: Take a picture at the specified size.
-author: Tim Poulsen
+version: 1.0.4
+apiversion: 4
+architectures: armeabi-v7a x86 arm64-v8a
+description: Take a picture at the specified size with zoom capability.
+author: Tim Poulsen and Pablo Schaffner
 license: Apache License Version 2.0
-copyright: Copyright (c) 2015 by Skypanther Studios, Inc.
+copyright: Copyright (c) 2018 by Creador S.A.
 
 # these should not be edited
 name: picatsize
-moduleid: com.skypanther.picatsize
-guid: 9e551de1-fd22-46d0-8266-a825ac0de882
+moduleid: cl.creador.picatsize
+guid: 9e551de1-fd22-46d0-8266-a825ac0de883
 platform: android
-minsdk: 6.0.0.v20161017194738
+minsdk: 7.0.1

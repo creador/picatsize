@@ -74,6 +74,7 @@ public class PASCameraActivity extends TiBaseActivity implements SurfaceHolder.C
 	public static boolean saveToPhotoGallery = false;
 	public static int whichCamera = PicatsizeModule.CAMERA_REAR;
 	public static int cameraFlashMode = PicatsizeModule.CAMERA_FLASH_OFF;
+	public static int whatZoom = 0;
 	public static boolean autohide = true;
 	public List<Size> supportedPictureSizes;
 	public Size desiredPictureSize;
@@ -262,8 +263,52 @@ public class PASCameraActivity extends TiBaseActivity implements SurfaceHolder.C
 			}
 		}
 	}
-	
 
+	public static void setZoom(int whatZoom) {
+		try {
+			if (camera !=null) {
+				Parameters p = camera.getParameters();
+				if (p.isZoomSupported()) {
+					if (whatZoom < p.getMaxZoom()) {
+						PASCameraActivity.whatZoom = whatZoom;
+						p.setZoom(whatZoom);
+					} else {
+						// set zoom to max
+						PASCameraActivity.whatZoom = p.getMaxZoom();
+						p.setZoom(p.getMaxZoom());
+					}
+					camera.setParameters(p);
+				} else {
+					Log.w(TAG, "Zoom is not supported on camera.");
+				}
+			}
+		} catch (Exception e) {
+			if (camera != null) {
+				camera.release();
+			}
+		}
+	}
+	
+	public static void setZoomPercentage(int whatZoom) {
+		try {
+			if (camera !=null) {
+				Parameters p = camera.getParameters();
+				if (p.isZoomSupported()) {
+					int maxzoom = p.getMaxZoom();
+					int newzoom = Math.round((whatZoom*maxzoom)/100);
+					PASCameraActivity.whatZoom = newzoom;
+					p.setZoom(newzoom);
+					camera.setParameters(p);
+				} else {
+					Log.w(TAG, "Zoom is not supported on camera.");
+				}
+			}
+		} catch (Exception e) {
+			if (camera != null) {
+				camera.release();
+			}
+		}
+	}
 
 	@Override
 	protected void onPause(){

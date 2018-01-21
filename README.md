@@ -1,18 +1,18 @@
 PicAtSize
 ===========================================
 
-Note: Initial support for Titanium 6.0 Beta added. 
+This version was compiled using Titanium SDK 7.0.1.GA
 
-PicAtSize is an Android module that lets you take a "_PIC_&#65279;ture _AT_ a _SIZE_" you specify. By taking a  photo smaller than the camera's native size, you create smaller files which are faster to upload, faster to process (resize, crop, rotate), and which create less memory-related issues. It was the memory issue that inspired this module.
+PicAtSize is an Android module, fork of skypanther/picatsize, that lets you take a "_PIC_&#65279;ture _AT_ a _SIZE_" you specify. By taking a  photo smaller than the camera's native size, you create smaller files which are faster to upload, faster to process (resize, crop, rotate), and which create less memory-related issues. It was the memory issue that inspired this module.
 
 Natively, Android supports the `camera.getParameters.setPictureSize()` method. But Titanium's Ti.Media module does not expose this functionality. This module makes that available for you to use.
+
+Additionally this fork exposes a setZoom(level) and setZoomPercentage(1-100) methods, to allow control of the camera's Zoom capability. 
 
 A few notes:
 
 * With this module, you must use a camera overlay or you'll get the native camera which has no size-specifying support.
 * You will get a photo at the closest, next larger size supported by the device's camera. It may not, and probably won't match the exact size you specify. (Reportedly, some Android devices will not take any photo if you were to specify a size that the camera doesn't support.)
-
-I want to send a huge thanks to @olivier_morandi who helped me get this module working. I was close, but could never have finished it without his help. Thanks!!!
 
 
 
@@ -24,7 +24,7 @@ I want to send a huge thanks to @olivier_morandi who helped me get this module w
 Use GitTio, as it will download, unzip, and install the module for you.
 
 ```shell
-gittio install com.skypanther.picatsize
+gittio install cl.creador.picatsize
 ```
 
 ### Manually
@@ -35,7 +35,7 @@ Register in the tiapp.xml:
 
 ```xml
 <modules>
-	<module platform="android">com.skypanther.picatsize</module>
+	<module platform="android">cl.creador.picatsize</module>
 </modules>
 ```
 
@@ -47,7 +47,7 @@ See the included sample app (in the example directory).
 
 ```javascript
 // instantiate and specify your target size
-var pascam = require('com.skypanther.picatsize');
+var pascam = require('cl.creador.picatsize');
 var targetWidth = 1024;
 var targetHeight = 800;
 
@@ -71,6 +71,16 @@ var closeBt = Ti.UI.createButton({
 overlay.add(closeBt);
 closeBt.addEventListener('click', function() {
 	pascam.hideCamera();
+});
+//zoom capability
+var slider = Ti.UI.createSlider({
+	bottom: 10
+	min: 0,
+	max: 100
+});
+overlay.add(slider);
+slider.addEventListener('change', function(e) {
+	pascam.setZoomPercentage(e.value);
 });
 
 // show the camerapascam.showCamera({

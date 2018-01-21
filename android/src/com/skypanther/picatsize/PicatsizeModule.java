@@ -779,6 +779,13 @@ public class PicatsizeModule extends KrollModule
 	{
 		return PASCameraActivity.cameraFlashMode;
 	}
+
+	@Kroll.method
+	@Kroll.getProperty
+	public int getZoom()
+	{
+		return PASCameraActivity.whatZoom;
+	}
 	
 	@Kroll.method
 	public void openPhotoGallery(KrollDict options)
@@ -1052,6 +1059,28 @@ public class PicatsizeModule extends KrollModule
 			PASCameraActivity.takePicture();
 		} else {
 			Log.e(TAG, "Camera preview is not open, unable to take photo");
+		}
+	}
+
+	@Kroll.method
+	public void setZoom(int whatZoom)
+	{
+		// make sure the preview / camera are open before trying to set the zoom level
+		if (PASCameraActivity.cameraActivity != null) {
+			PASCameraActivity.setZoom(whatZoom);
+		} else {
+			Log.e(TAG, "Camera preview is not open, unable to zoom camera");
+		}
+	}
+
+	@Kroll.method
+	public void setZoomPercentage(int whatZoom)
+	{
+		// make sure the preview / camera are open before trying to set the zoom level
+		if (PASCameraActivity.cameraActivity != null) {
+			PASCameraActivity.setZoomPercentage(whatZoom);
+		} else {
+			Log.e(TAG, "Camera preview is not open, unable to zoom camera");
 		}
 	}
 
